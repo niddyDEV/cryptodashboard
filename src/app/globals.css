@@ -1,21 +1,359 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* header */
+.header {
+  position: sticky;
+}
+/* fonts */
+.pixelify-sans {
+  font-family: var(--font-pixelify-sans), sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.red-rose {
+  font-family: var(--font-red-rose), sans-serif;
+}
+
+
+/* for welcome page */
+.HomePage {
+  background-image:url('/images/bg6.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh; /* Занимает всю высоту экрана */
+  display: flex;
+  flex-direction: column; /* Элементы располагаются вертикально */
+  justify-content: flex-start; /* Выравнивание по верхнему краю */
+  align-items: center; /* Центрирование по горизонтали */
+  text-align: center;
+  padding-top: 20px; /* Отступ сверху для логотипа */
+}
+
+
+.wallet-container {
+  background-color: #000000;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow:
+    0 0 10px rgba(255, 255, 255, 0.5),
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  position: relative;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.setup-wallet-button {
+  --glow-color: rgb(255, 255, 255);
+  --glow-spread-color: rgba(164, 164, 164, 0.781);
+  --enhanced-glow-color: rgb(188, 188, 188);
+  border: .25em solid var(--glow-color);
+  padding: 1em 3em;
+  color: var(--glow-color);
+
+  font-size: 15px;
+  font-weight: bold;
+  font-family: var(--font-pixelify-sans, sans-serif);
+  background-color: var(--btn-color);
+  border-radius: 1em;
+  outline: none;
+  box-shadow: 0 0 1em .25em var(--glow-color),
+         0 0 4em 1em var(--glow-spread-color),
+         inset 0 0 .75em .25em var(--glow-color);
+  text-shadow: 0 0 .5em var(--glow-color);
+  position: relative;
+  transition: all 0.3s;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+ }
+ 
+ .setup-wallet-button::after {
+  pointer-events: none;
+  content: "";
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: var(--glow-spread-color);
+  filter: blur(2em);
+  opacity: .7;
+ }
+ 
+ .setup-wallet-button:hover {
+  color: var(--btn-color);
+  background-color: var(--glow-color);
+  box-shadow: 0 0 1em .25em var(--glow-color),
+         0 0 4em 2em var(--glow-spread-color),
+         inset 0 0 .75em .25em var(--glow-color);
+ }
+ 
+ .setup-wallet-button:active {
+  box-shadow: 0 0 0.6em .25em var(--glow-color),
+         0 0 2.5em 2em var(--glow-spread-color),
+         inset 0 0 .5em .25em var(--glow-color);
+ }
+
+
+ .back-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-top: 2rem; /* Отступ сверху */
+  transition: color 0.3s ease;
+  margin-bottom: 2rem;
+}
+
+.back-button:hover {
+  color: #3b82f6; /* Изменение цвета при наведении */
+}
+
+/* Стили для мини-блоков с сид-фразой */
+.seed-phrase-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 колонки */
+  gap: 0.5rem; /* Расстояние между блоками */
+  margin-top: 1rem;
+}
+
+.seed-word {
+  background-color: #374151; /* Цвет фона блока */
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  text-align: center;
+  font-size: 0.875rem; /* Размер текста */
+  color: white;
+}
+
+/* for dashboard page */
+.WalletPage {
+  background-color: #000000;
+  width: 400px;
+  height: 800px;
+  border-radius: 20px; /* Скругленные края */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px; /* Добавим немного отступов внутри */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для красивого эффекта */
+  margin-top: 20px; /* Отступ между логотипом и WalletPage */
+}
+
+/* Общие стили для внутренних элементов */
+.chart-container, .chat-container, .wallet-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Стили для графика */
+.chart-container {
+  position: relative;
+}
+
+.chart-loader {
+  width: 64px;
+  height: 64px;
+  position: relative;
+  background-image:
+    linear-gradient(white 16px, transparent 0) ,
+    linear-gradient(black 16px, transparent 0) ,
+    linear-gradient(black 16px, transparent 0) ,
+    linear-gradient(white 16px, transparent 0);
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+  background-position: left top , left bottom , right top , right bottom;
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    width: 64px;
+    height: 64px;
+    transform: rotate(0deg)
+  }
+  50% {
+    width: 30px;
+    height: 30px;
+    transform: rotate(180deg)
+  }
+  100% {
+    width: 64px;
+    height: 64px;
+    transform: rotate(360deg)
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+
+
+/* Стили для чата */
+
+
+/* Стили для контента кошелька */
+.wallet-content {
+  align-items: center;
+  text-align: center;
 }
+
+.blur-back {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  filter: blur(40px);
+  background-color: #ffffff;
+  display: flex;
+}
+
+.account-picture {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.account-address {
+  font-family: 'Pixelify Sans', sans-serif;
+  text-align: center;
+  color: white;
+  font-size: 16px;
+}
+
+.balance {
+  text-align: center;
+  display: flex;
+  margin-top: 50px;
+}
+
+.account-balance {
+  font-family: 'Red Rose', sans-serif;
+  text-align: center;
+  color: white;
+  font-size: 48px;
+}
+
+
+.wallet-button {
+  font-family: var(--font-red-rose, sans-serif);
+  font-weight: bold;
+  position: relative;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600; 
+  transition: all 0.3s ease; 
+  transform: scale(1);
+  animation: pulse 2s infinite;
+}
+
+.wallet-button:hover {
+  transform: scale(1.05); 
+}
+
+.wallet-button:active {
+  transform: scale(0.95); 
+}
+
+/* Styling for "Create New Wallet" */
+.create-wallet-button {
+  --glow-color: rgb(255, 255, 255);
+  --glow-spread-color: rgba(164, 164, 164, 0.781);
+  --enhanced-glow-color: rgb(188, 188, 188);
+  border: .25em solid var(--glow-color);
+  padding: 1em 3em;
+  color: var(--glow-color);
+
+  font-family: var(--font-pixelify-sans, sans-serif);
+  font-size: 20px;
+  font-weight:bolder;
+  background-color: var(--btn-color);
+  border-radius: 20px;
+  outline: none;
+  box-shadow: 0 0 1em .25em var(--glow-color),
+         0 0 2em 1em var(--glow-spread-color),
+         inset 0 0 .75em .25em var(--glow-color);
+  position: relative;
+  transition: all 0.3s;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+
+
+/* Styling for "Import Wallet" */
+.import-wallet-button {
+  --glow-color: rgb(255, 255, 255);
+  --glow-spread-color: rgba(164, 164, 164, 0.781);
+  --enhanced-glow-color: rgb(188, 188, 188);
+  border: .25em solid var(--glow-color);
+  padding: 1em 3em;
+  color: var(--glow-color);
+  
+  font-family: var(--font-pixelify-sans, sans-serif);
+  font-size: 20px;
+  font-weight:bold;
+  background-color: var(--btn-color);
+  border-radius: 20px;
+  outline: none;
+  box-shadow: 0 0 .25em var(--glow-color),
+         0 0 4em 1em var(--glow-spread-color),
+         inset 0 0 .75em .25em var(--glow-color);
+  position: relative;
+  transition: all 0.3s;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+
+/* Hovering effect */
+.wallet-button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+  opacity: 0;
+  border-radius: 0.5rem; 
+  transition: opacity 0.3s ease; 
+}
+
+.wallet-button:hover::after {
+  opacity: 0.1; 
+}
+
+.seed-phrase-button {
+  color: white;
+  font-family: var(--font-red-rose, sans-serif);
+  font-weight: bold;
+  font-size:x-large;
+}
+
+.seed-phrase-button:hover {
+  color:#14b8a6;
+}
+
+.warning {
+  background-color: #000000; 
+  padding: 2rem; 
+  border-radius: 0.5rem; 
+  box-shadow: 
+    0 0 10px rgba(255, 255, 255, 0.5), 
+    0 10px 15px -3px rgba(0, 0, 0, 0.1), 
+    0 4px 6px -2px rgba(0, 0, 0, 0.05); 
+  width: 100%;
+  max-width: 28rem; 
+  max-height: 80vh; 
+  color: white;
+  margin-bottom: 1rem; 
+  position: relative;
+  text-align: justify;
+}
+
