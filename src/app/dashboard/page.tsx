@@ -11,12 +11,12 @@ export default function WalletPage() {
   const [selectedChain, setSelectedChain] = useState('0x1');
   const [walletAddress, setWalletAddress] = useState('');
   const [seedPhrase, setSeedPhrase] = useState('');
-  const [selectedToken, setSelectedToken] = useState('ETH'); // По умолчанию ETH
+  const [selectedToken, setSelectedToken] = useState('ETH'); 
   // making hook for resizable boxes
   const [sizes, setSizes] = useState({
     chart: { width: 1200, height: 500 }, 
-    wallet: { width: 600, height: 700 },
-    chat: { width: 600, height: 700 },
+    wallet: { width: 600, height: 900 },
+    chat: { width: 600, height: 900 },
   });
 
   // uploading data from sessionStorage
@@ -103,7 +103,7 @@ export default function WalletPage() {
           height={sizes.chart.height}
           onResize={(e, { size }) => handleResize('chart', size)}
           minConstraints={[800, 400]}
-          maxConstraints={[1200, 800]}
+          maxConstraints={[1250, 800]}
           resizeHandles={['se', 'sw', 'ne', 'nw']}
           className="wallet-container p-6 bg-gray-900 rounded-lg"
         >

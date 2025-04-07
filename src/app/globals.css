@@ -158,40 +158,6 @@
   position: relative;
 }
 
-.chart-loader {
-  width: 64px;
-  height: 64px;
-  position: relative;
-  background-image:
-    linear-gradient(white 16px, transparent 0) ,
-    linear-gradient(black 16px, transparent 0) ,
-    linear-gradient(black 16px, transparent 0) ,
-    linear-gradient(white 16px, transparent 0);
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-  background-position: left top , left bottom , right top , right bottom;
-  animation: rotate 1s linear infinite;
-}
-
-@keyframes rotate {
-  0% {
-    width: 64px;
-    height: 64px;
-    transform: rotate(0deg)
-  }
-  50% {
-    width: 30px;
-    height: 30px;
-    transform: rotate(180deg)
-  }
-  100% {
-    width: 64px;
-    height: 64px;
-    transform: rotate(360deg)
-  }
-}
-
-
 
 /* Стили для чата */
 
@@ -357,3 +323,24 @@
   text-align: justify;
 }
 
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  gap: 20px;
+}
+
+.spinningTriangle {
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

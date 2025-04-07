@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import { chains } from '@/app/utils/chains';
+import { useWallet, useCryptoAssets } from '@/app/hooks/hooks';
 
 interface WalletComponentProps {
   walletAddress: string;
@@ -15,16 +16,15 @@ export default function WalletComponent({
   onAccountChange,
   onTokenSelect,
 }: WalletComponentProps) {
-  const [balance, setBalance] = useState<string>('0');
   const [network, setNetwork] = useState<string>(chains[0].name);
-  const [provider, setProvider] = useState<ethers.providers.JsonRpcProvider | null>(null);
-  const [wallet, setWallet] = useState<ethers.Wallet | null>(null);
-  const [tokens, setTokens] = useState<{ symbol: string; address: string }[]>(chains[0].tokens);
   const [selectedToken, setSelectedToken] = useState<string>('');
   const [transactionStatus, setTransactionStatus] = useState<string>('');
   const [accounts, setAccounts] = useState<string[]>([]);
   const [selectedAccount, setSelectedAccount] = useState<string>('');
-  const [cryptoAssets, setCryptoAssets] = useState<{ symbol: string; balance: string; price: string; icon: string }[]>([]);
+
+  // Используем кастомные хуки
+  const { balance, provider, wallet } = useWallet('', walletAddress, network);
+  const { cryptoAssets } = useCryptoAssets(network);
 
   // Инициализация аккаунтов
   useEffect(() => {
@@ -33,50 +33,10 @@ export default function WalletComponent({
     setSelectedAccount(savedAccounts[0]);
   }, []);
 
-  // Инициализация кошелька и активов при изменении сети или адреса кошелька
-  useEffect(() => {
-    const initializeWallet = async () => {
-      try {
-        const selectedChain = chains.find((chain) => chain.name === network);
-        if (!selectedChain) return;
-
-        const provider = new ethers.providers.JsonRpcProvider(selectedChain.rpcUrl);
-        setProvider(provider);
-
-        const wallet = ethers.Wallet.createRandom().connect(provider); // Используем случайный кошелек для примера
-        setWallet(wallet);
-
-        const balance = await provider.getBalance(wallet.address);
-        setBalance(ethers.utils.formatEther(balance));
-
-        // Обновляем токены и активы для выбранной сети
-        setTokens(selectedChain.tokens);
-        updateCryptoAssets(selectedChain.tokens);
-      } catch (error) {
-        console.error('Error initializing wallet:', error);
-      }
-    };
-
-    if (walletAddress) {
-      initializeWallet();
-    }
-  }, [walletAddress, network]);
-
-  // Обновление списка активов
-  const updateCryptoAssets = (tokens: { symbol: string; address: string }[]) => {
-    const assets = tokens.map(token => ({
-      symbol: token.symbol,
-      balance: '0', // Здесь можно добавить логику для получения реального баланса
-      price: '0',  // Здесь можно добавить логику для получения реальной цены
-      icon: token.symbol === 'BTC' ? '₿' : token.symbol === 'ETH' ? 'Ξ' : '$'
-    }));
-    setCryptoAssets(assets); // Обновляем состояние активов
-  };
-
   // Обработка выбора токена
   const handleTokenSelect = (tokenSymbol: string) => {
     setSelectedToken(tokenSymbol);
-    onTokenSelect(tokenSymbol); // Передаем выбранный токен в родительский компонент
+    onTokenSelect(tokenSymbol);
   };
 
   // Обработка смены аккаунта
@@ -102,7 +62,7 @@ export default function WalletComponent({
         <select
           value={selectedAccount}
           onChange={(e) => handleAccountChange(e.target.value)}
-          className="w-full p-3 bg-zinc-800 text-white font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full p-3 bg-zinc-800 text-white font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-white-900"
         >
           {accounts.map((account) => (
             <option key={account} value={account}>
@@ -110,17 +70,16 @@ export default function WalletComponent({
             </option>
           ))}
         </select>
-        
       </div>
       <div className='account-picture ml-auto mr-auto'>
-          <div className='blur-back'>
-          </div>
+        <div className='blur-back'></div>
       </div>
+
       {/* Информация о кошельке */}
       <div className="mb-2 mt-2 p-4 rounded-lg">
         <p className="text-white w-36 ml-auto mr-auto pixelify-sans mb-4 break-all">{walletAddress}</p>
         <p className="text-white text-4xl red-rose font-bold">
-          {balance} <span className="text-sm text-3xl">{tokens.find((token) => token.symbol === selectedToken)?.symbol}$</span>
+          {balance} <span className="text-sm text-3xl">{selectedToken || chains.find(c => c.name === network)?.tokens[0]?.symbol}</span>
         </p>
       </div>
 
@@ -129,7 +88,7 @@ export default function WalletComponent({
         <select
           value={network}
           onChange={(e) => setNetwork(e.target.value)}
-          className="w-full p-3 bg-zinc-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+          className="w-full p-3 bg-zinc-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
         >
           {chains.map((chain) => (
             <option key={chain.name} value={chain.name}>
@@ -140,7 +99,7 @@ export default function WalletComponent({
       </div>
 
       {/* Список активов */}
-      <div className="mb-6 rounded-lg bg-zinc-700 p-4">
+      <div className="mb-6 rounded-lg bg-zinc-800 p-4">
         <label className="text-white text-sm font-medium mb-2 block">Your assets</label>
         <div className="space-y-2">
           {cryptoAssets.map((crypto) => {
