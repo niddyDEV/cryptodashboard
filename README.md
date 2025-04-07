@@ -1,7 +1,37 @@
-<<<<<<< HEAD
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+=======
+# Navigation
+1. Design 
+2. System architecture
+3. App overview
+
+
+## Design inspiration
+Looking for some drafts for designing this app in the Internet I have decided few key things, that I want to represent in such project.
+
+1. Contrast colors - **white** and **black**.  
+
+2. Domenant feeling of **digitalization** - pixels and sharp forms. Main font family is **Pixelify Sans**. Triangle figure as a tenet of blockchain axioms: *scalability*, *security* and *transparency*.  
+![triangle](https://github.com/user-attachments/assets/cd6a28d7-d677-432b-9677-aabed84ad8fe)
+
+
+3. Straight sourse of insipration - **Black Barrier** from Cyberpunk 2077 game. Visualisation of big data through *long lines*, *pixalization point of view* and *deep unknown space* that refers to **anonymity**.
+![waves](https://github.com/user-attachments/assets/0e2d8a4a-7629-407b-b23b-48d702206e45)
+
+![insp1](https://github.com/user-attachments/assets/ab625864-431f-4e6a-88f4-d53018551607)
+
+
+
+### Latest design  
+
+![bg5](https://github.com/user-attachments/assets/fb4e3596-295d-47c8-b2f1-9b9c0e03a3d1)
+
+
 
 ## Getting Started
+
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 First, run the development server:
 
@@ -37,4 +67,4 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 =======
 # cryptodashboard
->>>>>>> dcdb6b35b471ba77a7bc2b8132b40f90b2148c7f
+dcdb6b35b471ba77a7bc2b8132b40f90b2148c7f
